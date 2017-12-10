@@ -37,6 +37,9 @@ The goals / steps of this project are the following:
 
 [image22]: ./examples/validation_accuracy_graph.png "After Normalization"
 [image23]: ./examples/conv1_featuremap_straight_or_right.png "go straight or right"
+[image24]: ./examples/conv1_featuremap_keep_left.png "keep left"
+[image25]: ./examples/conv1_featuremap_Pedestrians.png "pedestrains"
+[image26]: ./examples/conv1_featuremap_Animal.png "Animal"
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
@@ -219,12 +222,26 @@ However, it is not really very meaningful as compare to the feature map of the g
 
 ![alt text][image21]
 
-## **TODO: I need to figure out what are the actual kernal filter for the 24 kernals choose in the 1st convolution layer of the training model. So to understand why the 100km is predicted as 80km.**
+## **TODO: I need to figure out what are the actual kernal filter for the 24 kernals choose in the 1st convolution layer of the training model. So to understand why the 100km is predicted as 80km. The feature map might give more hints but some of them are also not very meaningful**
 ## **Please give some hints on this.** 
 
 ### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
 #### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
 
-the feature map for convolution layer 1 of image 'go ahead or right'
+the feature map for convolution layer 1 of image 'go ahead or right' Top 5 probability is: [  9.88637626e-01   3.55981826e-03   1.90682220e-03   1.39155227e-03   8.96397105e-04]
 
 ![alt text][image23]
+
+the feature map for convolution layer 1 of image 'keep left'. Top 5 probability is: [  9.95417953e-01   4.27278783e-03   1.46946215e-04   7.83456126e-05   2.17612669e-05]
+![alt text][image24]
+
+the feature map for convolution layer 1 of image 'pedestrains'. Top 5 probability is: [ 0.74672395  0.12592237  0.04458173  0.02787801  0.0092495 ]
+![alt text][image25]
+
+the feature map for convolution layer 1 of image 'animals'. Top 5 probability is: [  9.99993682e-01   6.23026153e-06   9.12737477e-08   1.02389306e-08   2.78492784e-09]
+
+![alt text][image26]
+
+    From the above feature maps, we can see that the convolution layer do extract the local features of each image especially on the sharp edge like the stright lines. From the wrong prediction, i can see that the current model seems has some difficulty to predict the shapes
+    that are more variant over stright lines like the 100km/h limit, pedestrains, children crossing etc. Not sure why it works in this way. Perhaps it also somehow related to the choosen convolutional kernal filter. Maybe the internal implementation of kernel computation
+    function for the convolution layer has some limitation over non sharp edges.  
